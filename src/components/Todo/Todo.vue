@@ -125,8 +125,37 @@
 
 <style lang="scss" scoped>
     .todo {
+        position: relative;
+        z-index: 1;
+
+        &::after {
+            position: absolute;
+            z-index: -1;
+            top: -15px;
+            left: 1px;
+            width: 395px;
+            height: 67px;
+            background: linear-gradient(180deg, #31394D 0%, #091739 100%);
+            border-radius: 20px;
+            transform: rotate(-2.32deg);
+            content: '';
+        }
+
+        &::before {
+            position: absolute;
+            z-index: -1;
+            top: -25px;
+            left: 3px;
+            width: 341px;
+            height: 85px;
+            background: linear-gradient(180deg, #4F5565 0%, #000000 53.65%);
+            border-radius: 20px;
+            transform: rotate(-4.48deg);
+            content: '';
+        }
+
         &__wrap {
-            position: relative;
+            z-index: 1;
             width: 420px;
             padding: 30px;
             background: #252E42;
