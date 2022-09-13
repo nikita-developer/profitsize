@@ -1,10 +1,6 @@
 <template>
     <li class="todo-item">
-        <label
-            @click="$emit('is_check', item)"
-            class="todo-item__label"
-            :class="{'active': item.isCheck}"
-        >
+        <label @click="$emit('is_check', item)" class="todo-item__label" :class="{'active': item.isCheck}">
             <div class="todo-item__check"></div>
             <div class="todo-item__content">
                 <p class="todo-item__title">{{ item.title }}</p>
@@ -19,14 +15,14 @@
         props: {
             item: {
                 type: Object,
-                default: () => { },
+                default: () => {},
             },
         },
     }
 </script>
 
 <style lang="scss" scoped>
-.todo-item {
+    .todo-item {
         &__label {
             display: flex;
             align-items: center;
@@ -45,6 +41,7 @@
             &.active {
                 .todo-item__check {
                     background-color: #FF8469;
+
                     &::before {
                         display: block;
                     }

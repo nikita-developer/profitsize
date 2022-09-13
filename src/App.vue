@@ -14,7 +14,7 @@
 </script>
 
 <style lang="scss">
-* {
+	* {
 		margin: 0;
 		padding: 0;
 		box-sizing: border-box;
@@ -22,10 +22,10 @@
 	}
 
 	body {
-		font-family: 'Montserrat';
+		font-family: 'Montserrat', sans-serif;
 		font-weight: 400;
 		font-size: 16px;
-		color: #000;	
+		color: #000;
 	}
 
 	.page {
@@ -36,6 +36,20 @@
 
 		&__todo {
 			margin: auto;
+		}
+	}
+
+	.ps {
+		&__thumb-y {
+			right: 0 !important;
+			width: 4px !important;
+			background-color: #FF8469 !important;
+		}
+
+		&__rail-y {
+			width: 4px !important;
+			opacity: 1 !important;
+			background-color: transparent !important;
 		}
 	}
 </style>

@@ -5,17 +5,11 @@
                 <h1 class="todo__title">{{ name }}</h1>
                 <button class="todo__add">Add</button>
             </div>
-            <div class="todo__body">
+            <perfect-scrollbar class="todo__body">
                 <ul class="todo-list">
-                    <TodoItem
-                        v-for="item in list"
-                        :key="item.id"
-                        :item="item"
-                        @is_check="is_check"
-                        class="todo-list__item"
-                    ></TodoItem>
+                    <TodoItem v-for="item in list" :key="item.id" :item="item" @is_check="is_check" class="todo-list__item"></TodoItem>
                 </ul>
-            </div>
+            </perfect-scrollbar>
         </div>
         <div class="todo__footer">
             <p class="todo__copy">© 2022. Author Name</p>
@@ -29,8 +23,7 @@
         data() {
             return {
                 name: "Todo list",
-                list: [
-                    {
+                list: [{
                         id: 1,
                         isCheck: true,
                         title: "delectus aut autem",
@@ -117,7 +110,9 @@
                 ]
             }
         },
-        components: { TodoItem },
+        components: {
+            TodoItem
+        },
         methods: {
             is_check(item) {
                 this.list.find(el => {
@@ -129,7 +124,7 @@
 </script>
 
 <style lang="scss" scoped>
-.todo {
+    .todo {
         &__wrap {
             position: relative;
             width: 420px;
@@ -148,6 +143,7 @@
         &__body {
             overflow: auto;
             height: 418px;
+            padding-right: 15px;
         }
 
         &__title {
