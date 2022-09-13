@@ -3,7 +3,16 @@
         <div class="todo__wrap">
             <div class="todo__head">
                 <h1 class="todo__title">{{ name }}</h1>
-                <button class="todo__add">Add</button>
+                <div class="todo__options">
+                    <button
+                        @click="remove"
+                        class="btn todo__remove"
+                    >Remove</button>
+                    <button
+                        @click="modal = true"
+                        class="btn todo__add"
+                    >Add</button>
+                </div>
             </div>
             <perfect-scrollbar class="todo__body">
                 <ul class="todo-list">
@@ -15,109 +24,132 @@
             <p class="todo__copy">© 2022. Author Name</p>
         </div>
     </div>
+    <Modal
+        v-if="modal"
+        :modal="modal"
+        @addCheck="addCheck"
+        @closeModal="closeModal"
+    ></Modal>
 </template>
 
 <script>
     import TodoItem from "./TodoItem.vue";
+    import Modal from "../Modal/Modal.vue";
     export default {
         data() {
             return {
+                modal: false,
                 name: "Todo list",
                 list: [{
                         id: 1,
-                        isCheck: true,
-                        title: "delectus aut autem",
+                        isCheck: false,
+                        title: "1 delectus aut autem",
                         description: "laboriosam mollitia et enim quasi adipisci quia provident illum",
                     },
                     {
                         id: 2,
                         isCheck: false,
-                        title: "quo laboriosam deleniti aut qui",
+                        title: "2 quo laboriosam deleniti aut qui",
                         description: "",
                     },
                     {
                         id: 3,
                         isCheck: true,
-                        title: "laboriosam mollitim quasi adipisci quia provident illum",
+                        title: "3 laboriosam mollitim quasi adipisci quia provident illum",
                         description: "",
                     },
                     {
                         id: 4,
-                        isCheck: false,
-                        title: " sunt dtatum",
+                        isCheck: true,
+                        title: "4 sunt dtatum",
                         description: "accusamus eos facilis sint et aut voluptatem",
                     },
                     {
                         id: 5,
                         isCheck: true,
-                        title: "ellenres architecto voluptatum",
+                        title: "5 ellenres architecto voluptatum",
                         description: "accusamus eos facilis sint et aut voluptatem",
                     },
                     {
                         id: 6,
-                        isCheck: false,
-                        title: "epellendus sunt dolores arcoluptatum",
+                        isCheck: true,
+                        title: "6 epellendus sunt dolores arcoluptatum",
                         description: "accusamus eos sint et aut voluptatem",
                     },
                     {
                         id: 7,
                         isCheck: true,
-                        title: "delectus aut autem",
+                        title: "7 delectus aut autem",
                         description: "laboriosam mollitia episci quia provident illum",
                     },
                     {
                         id: 8,
                         isCheck: true,
-                        title: "delectus aut autem",
+                        title: "8 delectus aut autem",
                         description: "laboriosam mollitia et enim quasi adipisci quia provident illum",
                     },
                     {
                         id: 9,
-                        isCheck: false,
-                        title: "quo laboriosam deleniti aut qui",
+                        isCheck: true,
+                        title: "9 quo laboriosam deleniti aut qui",
                         description: "",
                     },
                     {
                         id: 10,
                         isCheck: true,
-                        title: "laboriosam mollitim quasi adipisci quia provident illum",
+                        title: "10 laboriosam mollitim quasi adipisci quia provident illum",
                         description: "",
                     },
                     {
                         id: 11,
-                        isCheck: false,
-                        title: " sunt dtatum",
+                        isCheck: true,
+                        title: "11 sunt dtatum",
                         description: "accusamus eos facilis sint et aut voluptatem",
                     },
                     {
                         id: 12,
                         isCheck: true,
-                        title: "ellenres architecto voluptatum",
+                        title: "12 ellenres architecto voluptatum",
                         description: "accusamus eos facilis sint et aut voluptatem",
                     },
                     {
                         id: 13,
-                        isCheck: false,
-                        title: "epellendus sunt dolores arcoluptatum",
+                        isCheck: true,
+                        title: "13 epellendus sunt dolores arcoluptatum",
                         description: "accusamus eos sint et aut voluptatem",
                     },
                     {
                         id: 14,
                         isCheck: true,
-                        title: "delectus aut autem",
+                        title: "14 delectus aut autem",
                         description: "laboriosam mollitia episci quia provident illum",
                     },
                 ]
             }
         },
         components: {
-            TodoItem
-        },
+    TodoItem,
+    Modal
+},
         methods: {
             is_check(item) {
                 this.list.find(el => {
                     if (el.id == item.id) el.isCheck = !el.isCheck
                 })
+            },
+            remove() {
+                if(this.list) {
+                    let listData = this.list.find((el, index) => {
+                        if(el.isCheck) this.list.splice(index, 1)
+                    })
+                    this.list = listData
+                }
+            },
+            closeModal() {
+                this.modal = false
+            },
+            addCheck(item) {
+                this.list.push(item)
             }
         }
     }
@@ -127,13 +159,15 @@
     .todo {
         position: relative;
         z-index: 1;
+        margin: auto;
 
         &::after {
             position: absolute;
             z-index: -1;
             top: -15px;
             left: 1px;
-            width: 395px;
+            width: 100%;
+            max-width: 395px;
             height: 67px;
             background: linear-gradient(180deg, #31394D 0%, #091739 100%);
             border-radius: 20px;
@@ -146,7 +180,8 @@
             z-index: -1;
             top: -25px;
             left: 3px;
-            width: 341px;
+            width: 100%;
+            max-width: 341px;
             height: 85px;
             background: linear-gradient(180deg, #4F5565 0%, #000000 53.65%);
             border-radius: 20px;
@@ -165,8 +200,13 @@
 
         &__head {
             display: flex;
+            align-items: center;
             justify-content: space-between;
             margin-bottom: 30px;
+        }
+
+        &__options {
+            margin-left: 15px;
         }
 
         &__body {
@@ -185,19 +225,7 @@
         }
 
         &__add {
-            padding: 5px 10px;
-            background-color: #FF8469;
-            border-radius: 7px;
-            font-weight: 500;
-            font-size: 14px;
-            text-transform: uppercase;
-            border: none;
-            cursor: pointer;
-            color: #fff;
-
-            &:hover {
-                background: #D95133;
-            }
+            margin-left: 15px;
         }
 
         &__copy {
@@ -205,6 +233,14 @@
             color: #414B62;
             font-weight: 500;
             text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .todo {
+                &__wrap {
+                    width: 100%;
+                }
+            }
         }
     }
 </style>
