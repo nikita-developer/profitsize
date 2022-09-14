@@ -1,28 +1,30 @@
 <template>
-    <div class="todo">
-        <div class="todo__wrap">
-            <div class="todo__head">
-                <h1 class="todo__title">{{ name }}</h1>
-                <div class="todo__options">
-                    <button @click="all" class="btn todo__all">{{allcheck ? 'All' : 'unAll'}}</button>
-                    <button @click="remove" class="btn todo__remove">Remove</button>
-                    <button @click="modal = true" class="btn todo__add">Add</button>
+    <div>
+        <div class="todo">
+            <div class="todo__wrap">
+                <div class="todo__head">
+                    <h1 class="todo__title">{{ name }}</h1>
+                    <div class="todo__options">
+                        <button @click="all" class="btn todo__all">{{allcheck ? 'All' : 'unAll'}}</button>
+                        <button @click="remove" class="btn todo__remove">Remove</button>
+                        <button @click="modal = true" class="btn todo__add">Add</button>
+                    </div>
                 </div>
+                <perfect-scrollbar class="todo__body">
+                    <ul class="todo-list">
+                        <p v-if="!list.length" class="todo__info">Список пустой</p>
+                        <TodoItem v-for="item in list" :key="item.id" :item="item" @is_check="is_check" class="todo-list__item"></TodoItem>
+                    </ul>
+                </perfect-scrollbar>
             </div>
-            <perfect-scrollbar class="todo__body">
-                <ul class="todo-list">
-                    <p v-if="!list.length" class="todo__info">Список пустой</p>
-                    <TodoItem v-for="item in list" :key="item.id" :item="item" @is_check="is_check" class="todo-list__item"></TodoItem>
-                </ul>
-            </perfect-scrollbar>
+            <div class="todo__footer">
+                <p class="todo__copy">© 2022. Author Name</p>
+            </div>
         </div>
-        <div class="todo__footer">
-            <p class="todo__copy">© 2022. Author Name</p>
-        </div>
+        <transition name="fade">
+            <Modal v-if="modal" @addCheck="addCheck" @closeModal="closeModal"></Modal>
+        </transition>
     </div>
-    <transition name="fade">
-        <Modal v-if="modal" :modal="modal" @addCheck="addCheck" @closeModal="closeModal"></Modal>
-    </transition>
 </template>
 
 <script>
@@ -130,6 +132,7 @@
                 this.list.find(el => {
                     if (el.id == item.id) el.isCheck = !el.isCheck
                 })
+                this.addLocalData()
             },
             remove() {
                 let result = []
@@ -137,16 +140,27 @@
                     if (!el.isCheck) result.push(el)
                 })
                 this.list = result
+                this.addLocalData()
             },
             closeModal() {
                 this.modal = false
+                this.addLocalData()
             },
             addCheck(item) {
                 this.list.push(item)
+                this.addLocalData()
             },
             all() {
                 this.list.forEach(el => el.isCheck = !el.isCheck)
                 this.allcheck = !this.allcheck
+            },
+            addLocalData() {
+                localStorage.setItem('Todo list', JSON.stringify(this.list));
+            }
+        },
+        beforeMount() {
+            if (localStorage.getItem('Todo list')) {
+                this.list = JSON.parse(localStorage.getItem('Todo list'))
             }
         }
     }
