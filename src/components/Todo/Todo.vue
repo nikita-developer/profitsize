@@ -4,12 +4,14 @@
             <div class="todo__head">
                 <h1 class="todo__title">{{ name }}</h1>
                 <div class="todo__options">
+                    <button @click="all" class="btn todo__all">{{allcheck ? 'All' : 'unAll'}}</button>
                     <button @click="remove" class="btn todo__remove">Remove</button>
                     <button @click="modal = true" class="btn todo__add">Add</button>
                 </div>
             </div>
             <perfect-scrollbar class="todo__body">
                 <ul class="todo-list">
+                    <p v-if="!list.length" class="todo__info">Список пустой</p>
                     <TodoItem v-for="item in list" :key="item.id" :item="item" @is_check="is_check" class="todo-list__item"></TodoItem>
                 </ul>
             </perfect-scrollbar>
@@ -29,6 +31,7 @@
     export default {
         data() {
             return {
+                allcheck: true,
                 modal: false,
                 name: "Todo list",
                 list: [{
@@ -140,6 +143,10 @@
             },
             addCheck(item) {
                 this.list.push(item)
+            },
+            all() {
+                this.list.forEach(el => el.isCheck = !el.isCheck)
+                this.allcheck = !this.allcheck
             }
         }
     }
