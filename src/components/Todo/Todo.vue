@@ -24,12 +24,14 @@
             <p class="todo__copy">© 2022. Author Name</p>
         </div>
     </div>
-    <Modal
-        v-if="modal"
-        :modal="modal"
-        @addCheck="addCheck"
-        @closeModal="closeModal"
-    ></Modal>
+    <transition name="fade">
+        <Modal
+            v-if="modal"
+            :modal="modal"
+            @addCheck="addCheck"
+            @closeModal="closeModal"
+        ></Modal>
+    </transition>
 </template>
 
 <script>
@@ -54,73 +56,73 @@
                     },
                     {
                         id: 3,
-                        isCheck: true,
+                        isCheck: false,
                         title: "3 laboriosam mollitim quasi adipisci quia provident illum",
                         description: "",
                     },
                     {
                         id: 4,
-                        isCheck: true,
+                        isCheck: false,
                         title: "4 sunt dtatum",
                         description: "accusamus eos facilis sint et aut voluptatem",
                     },
                     {
                         id: 5,
-                        isCheck: true,
+                        isCheck: false,
                         title: "5 ellenres architecto voluptatum",
                         description: "accusamus eos facilis sint et aut voluptatem",
                     },
                     {
                         id: 6,
-                        isCheck: true,
+                        isCheck: false,
                         title: "6 epellendus sunt dolores arcoluptatum",
                         description: "accusamus eos sint et aut voluptatem",
                     },
                     {
                         id: 7,
-                        isCheck: true,
+                        isCheck: false,
                         title: "7 delectus aut autem",
                         description: "laboriosam mollitia episci quia provident illum",
                     },
                     {
                         id: 8,
-                        isCheck: true,
+                        isCheck: false,
                         title: "8 delectus aut autem",
                         description: "laboriosam mollitia et enim quasi adipisci quia provident illum",
                     },
                     {
                         id: 9,
-                        isCheck: true,
+                        isCheck: false,
                         title: "9 quo laboriosam deleniti aut qui",
                         description: "",
                     },
                     {
                         id: 10,
-                        isCheck: true,
+                        isCheck: false,
                         title: "10 laboriosam mollitim quasi adipisci quia provident illum",
                         description: "",
                     },
                     {
                         id: 11,
-                        isCheck: true,
+                        isCheck: false,
                         title: "11 sunt dtatum",
                         description: "accusamus eos facilis sint et aut voluptatem",
                     },
                     {
                         id: 12,
-                        isCheck: true,
+                        isCheck: false,
                         title: "12 ellenres architecto voluptatum",
                         description: "accusamus eos facilis sint et aut voluptatem",
                     },
                     {
                         id: 13,
-                        isCheck: true,
+                        isCheck: false,
                         title: "13 epellendus sunt dolores arcoluptatum",
                         description: "accusamus eos sint et aut voluptatem",
                     },
                     {
                         id: 14,
-                        isCheck: true,
+                        isCheck: false,
                         title: "14 delectus aut autem",
                         description: "laboriosam mollitia episci quia provident illum",
                     },
@@ -128,9 +130,9 @@
             }
         },
         components: {
-    TodoItem,
-    Modal
-},
+            TodoItem,
+            Modal
+        },
         methods: {
             is_check(item) {
                 this.list.find(el => {
@@ -138,12 +140,11 @@
                 })
             },
             remove() {
-                if(this.list) {
-                    let listData = this.list.find((el, index) => {
-                        if(el.isCheck) this.list.splice(index, 1)
-                    })
-                    this.list = listData
-                }
+                let result = []
+                this.list.forEach(el => {
+                    if (!el.isCheck) result.push(el)
+                })
+                this.list = result
             },
             closeModal() {
                 this.modal = false
@@ -156,7 +157,7 @@
 </script>
 
 <style lang="scss" scoped>
-    .todo {
+.todo {
         position: relative;
         z-index: 1;
         margin: auto;
@@ -242,5 +243,14 @@
                 }
             }
         }
+    }
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.5s ease;
+    }
+
+    .fade-enter-from,
+    .fade-leave-to {
+        opacity: 0;
     }
 </style>

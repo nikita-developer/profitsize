@@ -31,8 +31,8 @@
                 this.$emit('closeModal', true)
             },
             add() {
-                if(!this.title) return
-                if(!this.description) return
+                if (!this.title) return
+                if (!this.description) return
 
                 let newItem = {
                     id: new Date() + Math.random(),
