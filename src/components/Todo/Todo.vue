@@ -4,14 +4,8 @@
             <div class="todo__head">
                 <h1 class="todo__title">{{ name }}</h1>
                 <div class="todo__options">
-                    <button
-                        @click="remove"
-                        class="btn todo__remove"
-                    >Remove</button>
-                    <button
-                        @click="modal = true"
-                        class="btn todo__add"
-                    >Add</button>
+                    <button @click="remove" class="btn todo__remove">Remove</button>
+                    <button @click="modal = true" class="btn todo__add">Add</button>
                 </div>
             </div>
             <perfect-scrollbar class="todo__body">
@@ -25,12 +19,7 @@
         </div>
     </div>
     <transition name="fade">
-        <Modal
-            v-if="modal"
-            :modal="modal"
-            @addCheck="addCheck"
-            @closeModal="closeModal"
-        ></Modal>
+        <Modal v-if="modal" :modal="modal" @addCheck="addCheck" @closeModal="closeModal"></Modal>
     </transition>
 </template>
 
@@ -157,100 +146,5 @@
 </script>
 
 <style lang="scss" scoped>
-.todo {
-        position: relative;
-        z-index: 1;
-        margin: auto;
-
-        &::after {
-            position: absolute;
-            z-index: -1;
-            top: -15px;
-            left: 1px;
-            width: 100%;
-            max-width: 395px;
-            height: 67px;
-            background: linear-gradient(180deg, #31394D 0%, #091739 100%);
-            border-radius: 20px;
-            transform: rotate(-2.32deg);
-            content: '';
-        }
-
-        &::before {
-            position: absolute;
-            z-index: -1;
-            top: -25px;
-            left: 3px;
-            width: 100%;
-            max-width: 341px;
-            height: 85px;
-            background: linear-gradient(180deg, #4F5565 0%, #000000 53.65%);
-            border-radius: 20px;
-            transform: rotate(-4.48deg);
-            content: '';
-        }
-
-        &__wrap {
-            z-index: 1;
-            width: 420px;
-            padding: 30px;
-            background: #252E42;
-            box-shadow: 0px 14px 34px rgba(0, 0, 0, 0.25);
-            border-radius: 20px 0px 40px;
-        }
-
-        &__head {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 30px;
-        }
-
-        &__options {
-            margin-left: 15px;
-        }
-
-        &__body {
-            overflow: auto;
-            height: 418px;
-            padding-right: 15px;
-        }
-
-        &__title {
-            font-size: 28px;
-            color: #fff;
-            font-weight: 700;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        &__add {
-            margin-left: 15px;
-        }
-
-        &__copy {
-            margin-top: 30px;
-            color: #414B62;
-            font-weight: 500;
-            text-align: center;
-        }
-
-        @media (max-width: 480px) {
-            .todo {
-                &__wrap {
-                    width: 100%;
-                }
-            }
-        }
-    }
-    .fade-enter-active,
-    .fade-leave-active {
-        transition: opacity 0.5s ease;
-    }
-
-    .fade-enter-from,
-    .fade-leave-to {
-        opacity: 0;
-    }
+    @import 'styles/main';
 </style>
