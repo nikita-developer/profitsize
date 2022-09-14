@@ -23,7 +23,7 @@
 			preloader() {
 				setTimeout(() => {
 					this.isPreloader = false
-				}, 3000)
+				}, 0)
 			}
 		},
 		mounted() {
