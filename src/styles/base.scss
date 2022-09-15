@@ -34,22 +34,6 @@ body {
     }
 }
 
-.btn {
-    padding: 5px 10px;
-    background-color: #FF8469;
-    border-radius: 7px;
-    font-weight: 500;
-    font-size: 14px;
-    text-transform: uppercase;
-    border: none;
-    cursor: pointer;
-    color: #fff;
-
-    &:hover {
-        background: #D95133;
-    }
-}
-
 .ps {
     &__thumb-y {
         right: 0 !important;

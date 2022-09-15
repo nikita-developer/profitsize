@@ -4,9 +4,9 @@
             <div class="todo__head">
                 <h1 class="todo__title">{{ name }}</h1>
                 <div class="todo__options">
-                    <button @click="all" class="btn todo__all">{{allcheck ? 'unAll' : 'All'}}</button>
-                    <button @click="remove" class="btn todo__remove">Remove</button>
-                    <button @click="modal = true" class="btn todo__add">Add</button>
+                    <MyButton class="todo__all" @click="all">{{allcheck ? 'unAll' : 'All'}}</MyButton>
+                    <MyButton class="todo__remove" @click="remove">Remove</MyButton>
+                    <MyButton class="todo__add" @click="modal = true">Add</MyButton>
                 </div>
             </div>
             <perfect-scrollbar class="todo__body">
@@ -150,13 +150,10 @@
                 this.addLocalData()
             },
             all() {
-                if (this.allcheck) {
-                    this.list.forEach(el => el.isCheck = false)
-                } else {
-                    this.list.forEach(el => el.isCheck = true)
+                if (this.list.length) {
+                    this.allcheck ? this.list.forEach(el => el.isCheck = false) : this.list.forEach(el => el.isCheck = true)
+                    this.allcheck = !this.allcheck
                 }
-
-                this.allcheck = !this.allcheck
             },
             addLocalData() {
                 localStorage.setItem('Todo list', JSON.stringify(this.list));
